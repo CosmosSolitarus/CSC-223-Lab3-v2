@@ -39,7 +39,7 @@ class EquivalenceClassesTest {
 			assertTrue(ECS.add(i));
 		}
 
-		assertTrue(ECS.add(null));
+		assertFalse(ECS.add(null));
 	}
 
 	@Test
@@ -83,7 +83,7 @@ class EquivalenceClassesTest {
 			ECS.add(i);
 		}
 
-		assertEquals(83, ECS.size());
+		assertEquals(80, ECS.size());
 	}
 
 	@Test
@@ -131,11 +131,11 @@ class EquivalenceClassesTest {
 		}
 
 		for (int i = 0; i < 12; i++) {
-			assertEquals(0, ECS.indexOfClass(i));
+			assertEquals(1, ECS.indexOfClass(i));
 		}
 
 		for (int i = 12; i < 40; i++) {
-			assertEquals(0, ECS.indexOfClass(i));
+			assertEquals(2, ECS.indexOfClass(i));
 		}
 	}
 }

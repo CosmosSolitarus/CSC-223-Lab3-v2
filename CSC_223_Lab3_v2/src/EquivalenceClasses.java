@@ -34,11 +34,15 @@ public class EquivalenceClasses<T> {
 	public boolean add(T element) {
 		// add element to class if class exists
 		for (LinkedEquivalenceClass<T> lec : _classes) {
-			if (lec.add(element)) return true;
+			if (lec.belongs(element)) {
+				lec.add(element);
+				return true;
+			}
 		}
 
 		// otherwise create new class
 		LinkedEquivalenceClass<T> lec = new LinkedEquivalenceClass<T>(_comparator);
+		lec.add(element);
 		lec.demoteAndSetCanonical(element);
 		_classes.add(lec);
 		
@@ -53,7 +57,7 @@ public class EquivalenceClasses<T> {
 	 */
 	public boolean contains(T target) {
 		for (LinkedEquivalenceClass<T> lec : _classes) {
-			if (lec.belongs(target)) return true;
+			if (lec.contains(target)) return true;
 		}
 
 		return false;
