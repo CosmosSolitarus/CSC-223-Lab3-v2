@@ -12,8 +12,6 @@ import java.util.Comparator;
 
 import org.junit.jupiter.api.Test;
 
-import input.components.LinkedEquivalenceClass.LinkedEquivalenceClass;
-
 class LinkedEquivalenceClassTest {
 
 	Comparator<Integer> comp = new Comparator<Integer>() {
