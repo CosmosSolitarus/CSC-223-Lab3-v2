@@ -38,12 +38,12 @@ public class LinkedEquivalenceClass<T> {
 	}
 	
 	/**
-	 * Returns whether the class is empty
+	 * Returns whether the class and canonical are empty
 	 * 
 	 * @return
 	 */
 	public boolean isEmpty() {
-		return _rest.isEmpty();
+		return _rest.isEmpty() && _canonical == null;
 	}
 
 	/**
@@ -66,7 +66,9 @@ public class LinkedEquivalenceClass<T> {
 	 * @return
 	 */
 	public int size() {
-		return _rest.size() + 1;
+		if (_canonical != null) return _rest.size() + 1;
+		
+		return _rest.size();
 	}
 	
 	/**
@@ -82,7 +84,7 @@ public class LinkedEquivalenceClass<T> {
 	 * @return
 	 */
 	public boolean add(T element) {
-		if (belongs(element)) {
+		if (belongs(element) && !contains(element)) {
 			_rest.addToBack(element);
 			return true;
 		}
@@ -98,26 +100,28 @@ public class LinkedEquivalenceClass<T> {
 	 * @return
 	 */
 	public boolean contains(T target) {
-		return _rest.contains(target);
+		if (target == null && _canonical == null) return true;
+		
+		if (_canonical.equals(target)) return true;
+		
+		if (_rest.contains(target))	return true;
+		
+		return false;
 	}
 	
 	/**
 	 * Returns whether target should be contained
-	 * in the class and is currently not.
+	 * in the class.
 	 * 
 	 * @param target
 	 * @return
 	 */
 	public boolean belongs(T target) {
-		if (_canonical == null) {
-			return false;
-		} else if (_comparator.compare(_canonical, target) != 0) {
-			return false;
-		} else if (!target.equals(_canonical)) {
-			return false;
-		} else if (!contains(target)) {
-			return false;
-		}
+		if (isEmpty()) return false;
+		
+		if (_canonical == null) return _comparator.compare(_rest.first()._data, target) != 0;
+		
+		if (_comparator.compare(_canonical, target) != 0) return false;
 		
 		return true;
 	}
@@ -131,6 +135,13 @@ public class LinkedEquivalenceClass<T> {
 	 * @return
 	 */
 	public boolean remove(T target) {
+		if (target == null && _canonical == null) return true;
+		
+		if (_canonical.equals(target)) {
+			_canonical = null;
+			return true;
+		}
+		
 		return _rest.remove(target);
 	}
 	
@@ -143,7 +154,11 @@ public class LinkedEquivalenceClass<T> {
 	 * @return
 	 */
 	public boolean removeCanonical() {
-		return _rest.remove(_canonical);
+		if (_canonical == null) return false;
+		
+		_canonical = null;
+		
+		return true;
 	}
 	
 	/**
@@ -183,9 +198,9 @@ public class LinkedEquivalenceClass<T> {
 	/**
 	 * toString method. Example toString:
 	 * 
-	 * {2 | 4,6,8,10}
+	 * {2 | 4;6;8;10}
 	 */
 	public String toString() {
-		return "{" + _canonical.toString() + " | " + _rest.toString() + "}";
+		return "{" + _canonical + " | " + _rest.toString() + "}";
 	}
 }

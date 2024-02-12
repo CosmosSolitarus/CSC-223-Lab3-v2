@@ -22,9 +22,6 @@ class EquivalenceClassesTest {
 	@Test
 	void addTest() {
 		EquivalenceClasses<Integer> ECS = new EquivalenceClasses<Integer>(comp);
-
-		assertTrue(ECS.add());
-		assertTrue(ECS.add());
 	}
 
 	@Test

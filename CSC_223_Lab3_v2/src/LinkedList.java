@@ -52,8 +52,7 @@
 	 * @param element
 	 **/
 	public void addToFront(T element) {
-		Node n = new Node(element, _head._next);
-		_head._next = n;
+		_head._next = new Node(element, _head._next);
 		_size++;
 	}
 
@@ -63,7 +62,7 @@
 	 * @param target
 	 **/
 	public boolean contains(T target) {
-		for (Node n = _head._next; !n.equals(_tail); n = n._next) {
+		for (Node n = _head._next; n != _tail; n = n._next) {
 			if (n._data.equals(target)) {
 				return true;
 			}
@@ -78,16 +77,12 @@
 	 * @param target
 	 **/
 	private Node previous(T target) {		
-		Node n = _head._next;
-		
-		while (!n._next.equals(_tail) && !n._next._data.equals(target)) {
-			n = n._next;
+		for (Node n = _head; n != _tail; n = n._next) {
+			if (n._next._data == null || n._next._data.equals(target)) {
+				return n;
+			}
 		}
 		
-		if (!n.equals(_tail) ) {
-			return n;
-		}
-			
 		return null;
 	}
 
@@ -99,12 +94,14 @@
 	 */
 	public boolean remove(T target) {
 		Node n = previous(target);
+		
 		if (n == null) {
 			return false;
 		}
 
 		n._next = n._next._next;
 		_size--;
+		
 		return true;
 	}
 
@@ -114,22 +111,29 @@
 	 * @return n
 	 **/
 	private Node last() {
-		Node n = _head;
-		while (n._next != _tail) {
-			n = n._next;
-		}
-		return n;
+		return previous(null);
 	}
 
+	/**
+	 * Obtains the first node in the linked list.
+	 * 
+	 * @return
+	 */
+	public Node first() {
+		if (_size > 0) {
+			return _head._next;
+		}
+		
+		return null;
+	}
+	
 	/**
 	 * Adds the specified element to the location after the tail.
 	 * @param element
 	 **/
 	public void addToBack(T element) {
-	    if (!contains(element)) {
-	        last()._next = new Node(element, _tail);
-	        _size++;
-	    }
+	    last()._next = new Node(element, _tail);
+	    _size++;
 	}
 	
 	/**
@@ -138,11 +142,11 @@
 	 **/
 	public void reverse() {
 	    if (_size >= 2) {
-	    	reverse(_head._next);
+	    	reverse(_head._next)._next = _tail;
 	    }
 	}
 
-	private void reverse(Node n) {
+	private Node reverse(Node n) {
     	if (n._next._next == _tail) {
 	    	_head._next = n._next;
 	    } else {
@@ -150,7 +154,8 @@
 	    }
 	    
 	    n._next._next = n;
-	    n._next = _tail;
+	    
+	    return (n);
 	}
 
 	/**

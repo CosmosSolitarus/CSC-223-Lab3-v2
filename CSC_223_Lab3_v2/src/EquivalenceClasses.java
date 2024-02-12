@@ -18,7 +18,6 @@ public class EquivalenceClasses<T> {
 		
 	protected List<LinkedEquivalenceClass<T>> _classes;
 		
-	
 	public EquivalenceClasses(Comparator<T> comp) {
 		_comparator = comp;
 		_classes = new ArrayList<>();
@@ -53,7 +52,7 @@ public class EquivalenceClasses<T> {
 	 */
 	public boolean contains(T target) {
 		for (LinkedEquivalenceClass<T> lec : _classes) {
-			if (lec.contains(target)) return true;
+			if (lec.belongs(target)) return true;
 		}
 
 		return false;
@@ -75,16 +74,22 @@ public class EquivalenceClasses<T> {
 	}
 
 	/**
-	 * Counts number of equivalence classes
+	 * Counts number of non-empty equivalence classes
 	 * 
 	 * @return
 	 */
 	public int numClasses() {
-		return _classes.size();
+		int count = 0;
+		
+		for (LinkedEquivalenceClass<T> lec : _classes) {
+			if (lec.size() != 0) count++;
+		}
+
+		return count;
 	}
 
 	/**
-	 * Finds the index of the first equivalence class element
+	 * Finds the index of the equivalence class element
 	 * occurs in. If element is not found, returns -1.
 	 * 
 	 * @param element
@@ -92,13 +97,22 @@ public class EquivalenceClasses<T> {
 	 */
 	protected int indexOfClass(T element) {
 		for (int i = 0; i < _classes.size(); i++) {
-			if (_classes.get(i).contains(element)) return i;
+			if (_classes.get(i).belongs(element)) return i;
 		}
 		
 		return -1;
 	}
 
+	/**
+	 * toString method
+	 */
 	public String toString() {
-		return null;
+		String out = "";
+		
+		for (LinkedEquivalenceClass<T> lec : _classes) {
+			out += lec.toString() + "\n";
+		}
+		
+		return out;
 	}
 }

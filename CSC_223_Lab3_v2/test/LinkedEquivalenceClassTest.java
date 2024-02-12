@@ -15,13 +15,21 @@ class LinkedEquivalenceClassTest {
 
 	Comparator<Integer> comp = new Comparator<Integer>() {
 		public int compare(Integer x, Integer y) {
-			return x%2 == y % 2 ? 0:1;
+			return Integer.compare(classify(x), classify(y));
+		}
+		
+		private int classify(Integer n) {
+			if (n < 0) return 1;
+			
+			if (n < 12) return 2;
+			
+			return 3;
 		}
 	};
 
 	@Test
 	void canonicalReturnTest() {
-		LinkedEquivalenceClass<Integer> Lec =new LinkedEquivalenceClass<Integer>(comp);
+		LinkedEquivalenceClass<Integer> Lec = new LinkedEquivalenceClass<Integer>(comp);
 		for(int i=0; i<7;i++) {
 			Lec.add(i);         
 		}
@@ -173,10 +181,10 @@ class LinkedEquivalenceClassTest {
 			Lec.add(i);         
 		}
 		Lec.demoteAndSetCanonical(1);
-		assertEquals("1:6;5;4;3;2;0",Lec.toString());
+		assertEquals("{1 | 6;5;4;3;2;0}",Lec.toString());
 		
 		Lec.demoteAndSetCanonical(2);
-		assertEquals("2:1;6;5;4;3;0",Lec.toString());
+		assertEquals("{2 | 1;6;5;4;3;0}",Lec.toString());
 	}
 }	
 
