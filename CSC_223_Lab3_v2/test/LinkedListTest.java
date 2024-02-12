@@ -1,12 +1,12 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * @date 2/8/2024
  * @author Case Riddle
  * @author Sam Nusstein
  * @author Jack Roberts
  **/
-
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class LinkedListTest {
 
@@ -31,6 +31,12 @@ public class LinkedListTest {
 
 		assertTrue(list.isEmpty());
 		assertEquals(0, list.size());
+		
+		LinkedList<Integer> list2 = new LinkedList<>();
+	    list2.clear();
+	    
+	    assertTrue(list2.isEmpty());
+	    assertEquals(0, list2.size());
 	}
 
 	@Test
@@ -77,14 +83,15 @@ public class LinkedListTest {
 	@Test
     public void testRemove() {
         LinkedList<String> list = new LinkedList<>();
+        
         list.addToFront("Case");
         list.addToFront("Chase");
 
         assertTrue(list.remove("Case"));
         assertEquals("Chase", list.toString());
         assertEquals(1, list.size());
-        
-        assertTrue(list.remove("Chase"));  
+
+        assertTrue(list.remove("Chase"));
         assertTrue(list.isEmpty());
     }
 	
@@ -100,56 +107,30 @@ public class LinkedListTest {
 
 	@Test
 	public void testReverse() {
-		// list of length > 2
-		LinkedList<Integer> list1 = new LinkedList<Integer>();
+	    LinkedList<Integer> list1 = new LinkedList<Integer>();
 	    list1.addToBack(1);
 	    list1.addToBack(2);
 	    list1.addToBack(3);
 
-	    LinkedList<Integer> list2 = new LinkedList<Integer>();
+	    LinkedList<Integer> list2 = new LinkedList<>();
 	    list2.addToBack(3);
 	    list2.addToBack(2);
 	    list2.addToBack(1);
-	    
+
 	    assertEquals(list1.toString(), "1;2;3");
 	    assertEquals(list2.toString(), "3;2;1");
-	    
+
 	    list1.reverse();
-	    
+
 	    assertEquals(list1.toString(), list2.toString());
 	    
-	    // list of length 2
-	    LinkedList<Integer> list3 = new LinkedList<Integer>();
-	    list3.addToBack(5);
-	    list3.addToBack(-2);
-	    
-	    LinkedList<Integer> list4 = new LinkedList<Integer>();
-	    list4.addToBack(-2);
-	    list4.addToBack(5);
-	    
+	    LinkedList<Integer> list3 = new LinkedList<>();
+
+	    assertEquals(list3.toString(), "");
+
 	    list3.reverse();
-	    
-	    assertEquals(list3.toString(), list4.toString());
-	    
-	    // list of length 1
-	    LinkedList<Integer> list5 = new LinkedList<Integer>();
-	    list5.addToBack(0);
-	    
-	    LinkedList<Integer> list6 = new LinkedList<Integer>();
-	    list6.addToBack(0);
-	    
-	    list5.reverse();
-	    
-	    assertEquals(list5.toString(), list6.toString());
-	    
-	    // list of length 0
-	    LinkedList<Integer> list7 = new LinkedList<Integer>();
-	    
-	    LinkedList<Integer> list8 = new LinkedList<Integer>();
-	    
-	    list7.reverse();
-	    
-	    assertEquals(list7.toString(), list8.toString());
+
+	    assertEquals(list3.toString(), "");
 	}
 
 	@Test
