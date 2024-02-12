@@ -13,7 +13,7 @@
  * @author Sam Nusstein
  * @author Jack Roberts
  **/
-package input;
+package input.components.LinkedEquivalenceClass;
 
 import java.util.Comparator;
 
@@ -122,7 +122,7 @@ public class LinkedEquivalenceClass<T> {
 	public boolean belongs(T target) {
 		if (isEmpty()) return false;
 		
-		if (_canonical == null) return _comparator.compare(_rest.first()._data, target) != 0;
+		if (_canonical == null) return _comparator.compare(_rest.first(), target) != 0;
 		
 		if (_comparator.compare(_canonical, target) != 0) return false;
 		

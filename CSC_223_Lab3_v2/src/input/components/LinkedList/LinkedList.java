@@ -120,10 +120,9 @@ package input.components.LinkedList;
 	 * 
 	 * @return
 	 */
-	public Node first() {
+	public T first() {
 		if (_size > 0) {
-			return _head._next;
-		}
+			return _head._next._data;}
 		
 		return null;
 	}
