@@ -7,10 +7,13 @@
  * @author Sam Nusstein
  * @author Jack Roberts
  **/
+package input.components.EquivalenceClass;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import input.components.LinkedEquivalenceClass.LinkedEquivalenceClass;
 
 public class EquivalenceClasses<T> {
 

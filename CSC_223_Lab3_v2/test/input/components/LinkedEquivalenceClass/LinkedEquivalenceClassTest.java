@@ -4,12 +4,15 @@
  * @author Sam Nusstein
  * @author Jack Roberts
  **/
+package input.components.LinkedEquivalenceClass;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Comparator;
 
 import org.junit.jupiter.api.Test;
+
+import input.components.LinkedEquivalenceClass.LinkedEquivalenceClass;
 
 class LinkedEquivalenceClassTest {
 

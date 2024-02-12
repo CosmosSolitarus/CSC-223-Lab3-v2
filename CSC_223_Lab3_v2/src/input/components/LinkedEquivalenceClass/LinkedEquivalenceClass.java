@@ -13,8 +13,11 @@
  * @author Sam Nusstein
  * @author Jack Roberts
  **/
+package input;
 
 import java.util.Comparator;
+
+import input.components.LinkedList.LinkedList;
 
 public class LinkedEquivalenceClass<T> {
 

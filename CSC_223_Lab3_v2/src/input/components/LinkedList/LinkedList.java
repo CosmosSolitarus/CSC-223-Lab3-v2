@@ -1,3 +1,4 @@
+package input.components.LinkedList;
 /**
  * Methods that initialize and operate a linked list datatype.
  * @date 2/8/2024
