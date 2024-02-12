@@ -13,11 +13,9 @@
  * @author Sam Nusstein
  * @author Jack Roberts
  **/
-package input.components.LinkedEquivalenceClass;
+
 
 import java.util.Comparator;
-
-import input.components.LinkedList.LinkedList;
 
 public class LinkedEquivalenceClass<T> {
 
@@ -87,6 +85,11 @@ public class LinkedEquivalenceClass<T> {
 	 * @return
 	 */
 	public boolean add(T element) {
+		if (isEmpty()) {
+			_canonical = element;
+			return true;
+		}
+
 		if (belongs(element) && !contains(element)) {
 			_rest.addToBack(element);
 			return true;
@@ -122,6 +125,8 @@ public class LinkedEquivalenceClass<T> {
 	public boolean belongs(T target) {
 		if (isEmpty()) return false;
 		
+		if (target == null) return false;
+
 		if (_canonical == null) return _comparator.compare(_rest.first(), target) != 0;
 		
 		if (_comparator.compare(_canonical, target) != 0) return false;
@@ -140,8 +145,15 @@ public class LinkedEquivalenceClass<T> {
 	public boolean remove(T target) {
 		if (target == null && _canonical == null) return true;
 		
+		if (isEmpty()) return false;
+
 		if (_canonical.equals(target)) {
 			_canonical = null;
+
+			if (!isEmpty()) {
+				demoteAndSetCanonical(_rest.first());
+			}
+
 			return true;
 		}
 		
@@ -182,19 +194,27 @@ public class LinkedEquivalenceClass<T> {
 	 * @return
 	 */
 	public boolean demoteAndSetCanonical(T element) {
-		if (!belongs(element)) {
-			return false;
-		}
-		
+		if (isEmpty()) return false;
+
 		if (_canonical == null) {
-			_canonical = element;
-			_rest.remove(element);
+			_canonical = _rest.first();
+			_rest.remove(_rest.first());
+
+			demoteAndSetCanonical(element);
+
 			return true;
 		}
 		
+		if (!belongs(element) || !contains(element)) {
+			return false;
+		}
+		
+		if (_canonical.equals(element)) return false;
+
 		_rest.remove(element);
 		_rest.addToBack(_canonical);
 		_canonical = element;
+
 		return true;
 	}
 	
