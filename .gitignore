@@ -24,6 +24,6 @@ hs_err_pid*
 replay_pid*
 
 # other things to ignore
-.settings/
-.classpath
-.project
+CSC_223_Lab3_v2/.settings/
+CSC_223_Lab3_v2/.classpath
+CSC_223_Lab3_v2/.project
